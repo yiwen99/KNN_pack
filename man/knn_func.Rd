@@ -2,7 +2,7 @@
 \alias{knn_func}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+knn_func()
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
