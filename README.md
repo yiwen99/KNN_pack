@@ -1,3 +1,6 @@
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/yiwen99/KNN625/workflows/R-CMD-check/badge.svg)](https://github.com/yiwen99/KNN625/actions)
+<!-- badges: end -->
 
 # KNN625
 ## Introduction
