@@ -64,7 +64,7 @@ We can see that the results from knn_func match with the original knn function.
 
 ##### Demonstrate the usage of knn1_func
 
-The idea for knn1_func is very similar to knn_func, except that it only classify the test cases based on 1 nearest neighbor, (and thus there will be no probability of the proportion of the majority vote). \
+The idea for knn1_func is very similar to knn_func, except that it only classify the test cases based on 1 nearest neighbor, (and thus there will be no probability of the proportion of the majority vote). 
 
 We first use this function to classify one test case
 
