@@ -168,6 +168,7 @@ benchmark_result = suppressWarnings(bench::mark(originalKNN = knn(train=training
 ```
 
 ```{r}
+library(tidyr)
 print(benchmark_result)
 plot(benchmark_result)
 ```
