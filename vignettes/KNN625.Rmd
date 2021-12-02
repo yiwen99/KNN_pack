@@ -12,6 +12,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+install.packages("ggbeeswarm")
+library("ggbeeswarm")
 ```
 
 ### load the package KNN625
