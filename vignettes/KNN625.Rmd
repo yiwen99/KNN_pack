@@ -14,6 +14,161 @@ knitr::opts_chunk$set(
 )
 ```
 
+### load the package KNN625
+
 ```{r setup}
 library(KNN625)
 ```
+
+### We first demonstrate the usage of this package using a simple self-madeup dataset.
+
+```{r}
+train <- matrix(c(9,2,2,3,9,0,1,9,9,8,2,3,6,9,4,2,3,6),ncol=2)
+train #The training dataset, each observation is a datapoint with 2 coordinates.
+cl <- as.factor(c("a","b","b","b","c","c","c","c","c"))
+data.frame(train, cl) #cl is the labels for the data points in the training dataset
+```
+##### Demonstrate the usage of knn_func
+
+First, we use the function to classify one test case. 
+
+```{r}
+test1 <- c(2,3.5)
+knn_func(train,test1, cl, 3, prob=TRUE) #k is ideally chosen to be an odd number
+```
+see the output from the original knn function.
+
+```{r}
+library(class)
+knn(train=train, test=test1, cl=cl, k=3, prob=TRUE)
+```
+Next, we use the knn_func to classify multiple test cases. The test cases are inputed as a matrix. The knn_func function reads each row of the test matrix as one test case.
+
+```{r}
+test <- matrix(c(2,9,3.5,7.5),ncol=2)
+test
+```
+```{r}
+knn_func(train, test, cl, k=3, prob=TRUE)
+knn_func(train, test, cl, k=3, prob=FALSE)
+```
+see the output from the original knn function:
+
+```{r}
+knn(train=train, test=test, k=3, cl=cl, prob=TRUE)
+knn(train, test, cl, k=3, prob=FALSE)
+```
+We can see that the results from knn_func match with the original knn function. 
+
+##### Demonstrate the usage of knn1_func
+
+The idea for knn1_func is very similar to knn_func, except that it only classify the test cases based on 1 nearest neighbor, (and thus there will be no probability of the proportion of the majority vote). \
+
+We first use this function to classify one test case
+
+```{r}
+knn1_func(train, test1, cl)
+```
+see if it matches with the original knn1 function:
+
+```{r}
+knn1(train, test1, cl)
+```
+Then we use this function to classify multiple test cases. The test cases are inputed as a matrix. The knn1_func function reads each row of the test matrix as one test case.
+
+```{r}
+knn1_func(train, test, cl)
+```
+see if the output matches with the original knn1 function:
+
+```{r}
+knn1(train, test,cl)
+```
+Further demonstration on knn1_func: randomness will be introduced if there are two data points are equally closest to the test case. 
+
+```{r}
+set.seed(1)
+train_new <- train
+train_new[8,] <- c(2,2)
+train_new
+data.frame(train_new, cl)
+knn1_func(train_new, c(2,2),cl)
+```
+
+```{r}
+set.seed(0)
+knn1_func(train_new, c(2,2),cl)
+```
+There's also this kind of randomness introduced in the original knn1 function:
+```{r}
+set.seed(0)
+knn1(train_new, c(2,2),cl)
+```
+```{r}
+set.seed(1)
+knn1(train_new,c(2,2),cl)
+```
+Further notes: any of the input parameters cannot contain NA values. It will produce an error when applying knn_fun and knn1_func. The error messages match with those written in the original knn and knn1 function. 
+
+
+### We apply this package to a real dataset. We use the iris dataset as an example. 
+
+Let's take a look at what the iris dataset looks like. The first four columns are the variables for a single observation, while the fifth column being the species (label) of that observation. 
+
+```{r}
+head(iris)
+dim(iris)
+```
+```{r}
+set.seed(1)
+training_rows <- sort(c(sample(1:50, 40), sample(51:100, 40), sample(101:150, 40)))
+training_x <- as.matrix(iris[training_rows, 1:4])
+labels <- iris[training_rows, 5]
+```
+
+```{r}
+# test cases
+test_case_a <- as.matrix(iris[24, 1:4]) # true class setosa
+test_case_b <- as.matrix(iris[124, 1:4]) # true class virginica
+test_case_c <- as.matrix(iris[80, 1:4]) #true class versicolor
+```
+
+#### Try knn_func on these test cases:
+
+```{r}
+knn_func(train=training_x, test=as.matrix(rbind(test_case_a,test_case_b,test_case_c)),cl=labels, k=5, prob=TRUE)
+#see if it matches with the output from the original knn function
+knn(train=training_x, test=as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl=labels, k=5, prob=TRUE)
+```
+Yes, the output is exactly the same as the original knn function.
+
+#### Try knn1_func on these test cases:
+
+```{r}
+knn1_func(train=training_x, test = as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl= labels)
+knn1(train=training_x, test = as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl= labels)
+```
+The output is exactly the same as the original knn1 function. 
+
+### To compare the efficiency of knn_func, knn1_func with the original knn and knn1 functions:
+
+```{r}
+library(bench)
+library(ggplot2)
+```
+
+```{r}
+test_mat <- as.matrix(rbind(test_case_a,test_case_b,test_case_c))
+test_large <- matrix(rep(test_mat,1000),ncol=4)
+```
+
+```{r}
+benchmark_result = suppressWarnings(bench::mark(originalKNN = knn(train=training_x,test=test_large, cl=labels, k=5, prob=TRUE), 
+                               knn_func =knn_func(training_x,test_large, labels, k=5, prob=TRUE) ))
+```
+
+```{r}
+print(benchmark_result)
+plot(benchmark_result)
+```
+Unfortunately, as demonstrated above, the knn_func and knn1_func are not as efficient as the original knn function and knn1 function in the class package.

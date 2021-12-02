@@ -47,7 +47,7 @@ knn_func <- function(train, test, cl, k, prob=FALSE){ #l=0 in the original knn f
     if(prob==FALSE){
       class <- factor(returned, levels=my_levels)
       #return (list(class=class))
-      class
+      return (class)
     }
     else{
       class <- factor(returned, levels=my_levels)
@@ -66,11 +66,15 @@ knn_func <- function(train, test, cl, k, prob=FALSE){ #l=0 in the original knn f
   else{#the input test case is a matrix with multiple observations
     distances_mat <- outer(1:n_test, 1:n_train, vdis) #each row i corresponds to distances of that test case i to all points in training test
 
-
-    class_result <- apply(distances_mat,1,find_k_nearest,simplify = FALSE)
-    attri_result <- sapply(class_result,function(x){attr(x,'prob')})
-    class_result <- (unlist(class_result))
-    attributes(class_result)$'prob'<-attri_result
+    if(prob==FALSE){
+      class_result <- apply(distances_mat,1,find_k_nearest,simplify = TRUE)
+    }
+    else{
+      class_result <- apply(distances_mat,1,find_k_nearest,simplify = FALSE)
+      attri_result <- sapply(class_result,function(x){attr(x,'prob')})
+      class_result <- (unlist(class_result))
+      attributes(class_result)$'prob'<-attri_result
+    }
     return (class_result)
   }
 
