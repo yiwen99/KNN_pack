@@ -1,7 +1,6 @@
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/yiwen99/KNN625/workflows/R-CMD-check/badge.svg)](https://github.com/yiwen99/KNN625/actions)
   <!-- badges: end -->
-  
 # KNN625
 ## Introduction
 This is a simple self written KNN package for UM BIOSTAT625 HW4. This package contains two functions: knn_func and knn1_func that correspond to the functions knn() and knn1() in library(class). knn_func() function does K-nearest neighbor classification on new test cases based on an inputted dataset with known labels. The idea for knn1() function is similar, only it does 1-nearest neighbor classification. The parameters of the two functions do not exactly match the ones in the original knn() and knn1(), but the two self-written functions are supposed to have the same output as knn() and knn1() in library(class).
