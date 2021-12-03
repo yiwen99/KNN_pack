@@ -30,5 +30,22 @@ test_that("knn works", {
   expect_equal(my_knn_output3, real_knn_output3)
 
   ##check on error messages
+  trainNA <- train
+  trainNA[1,] <- c(9, NA)
+  expect_error(knn_func(trainNA, test, cl, k=3),"no missing values are allowed")
+
+  testNA <- c(2, NA)
+  expect_error(knn_func(train, testNA, cl, k=3),"no missing values are allowed")
+
+  expect_error(knn_func(train, test, cl=NA, k=3),"no missing values are allowed")
+
+  expect_error(knn_func(train, test, cl, k=NA),"no missing values are allowed")
+
+  ## check whether the function converts a string of labels into factors
+  cl_s <- c("a","b","b","b","c","c","c","c","c")
+  my_knn_output1s <- knn_func(train,test1, cl_s, 3, prob=FALSE)
+  real_knn_output1 <- knn(train=train, test=test1, cl=cl, k=3, prob=FALSE)
+  expect_equal(my_knn_output1s, real_knn_output1)
+
 
 })
