@@ -1,4 +1,7 @@
 knn_func <- function(train, test, cl, k, prob=FALSE){ #l=0 in the original knn function
+
+  ##check if there are any missing values in the input
+
   if(sum(is.na(train))!=0){
     stop("no missing values are allowed")
   }
@@ -21,6 +24,7 @@ knn_func <- function(train, test, cl, k, prob=FALSE){ #l=0 in the original knn f
   n_test <- nrow(test)
   n_train <- nrow(train)
 
+  #define a function that computes the euclidean distance between two observations
   distance <- function(a,b){ #a and b are indices of observations, a corresponds to the ath row of test dataset, b corresponds to the bth row of the train dataset
     if(n_test==1){
       diff <- test-train[b,]
@@ -36,6 +40,8 @@ knn_func <- function(train, test, cl, k, prob=FALSE){ #l=0 in the original knn f
 
   vdis <- Vectorize(distance) #make a customized distance function that can do vectorized operations
 
+  #define a function that finds the nearest k observations in the training set
+  #for each observation in the test set
   find_k_nearest <- function(dists){
     sorted <- sort(dists, decreasing=FALSE)
     smallest_k_dists <- sorted[1:k]
