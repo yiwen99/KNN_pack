@@ -59,7 +59,8 @@ knn1_func <- function(train, test, cl){
   n_test <- nrow(test)
   n_train <- nrow(train)
 
-  distance <- function(a,b){ #a and b are indices of observations, a corresponds to the ath row of test dataset, b corresponds to the bth row of the train dataset
+  distance <- function(a,b){ #a and b are indices of observations,
+  #a corresponds to the ath row of test dataset, b corresponds to the bth row of the train dataset
     if(n_test==1){
       diff <- test-train[b,]
       euc_dis <- (sqrt(sum(diff^2)))
@@ -77,7 +78,8 @@ knn1_func <- function(train, test, cl){
   find_nearest_1 <- function(dists){
     smallest_dist <- min(dists)
 
-    ind_nearest_k <- which(dists %in% smallest_dist)
+    ind_nearest_k <- which(dists \%in\% smallest_dist)
+
     if(length(ind_nearest_k)!=1){
       ind_nearest_k<- sample(ind_nearest_k,1)
     }
@@ -93,7 +95,8 @@ knn1_func <- function(train, test, cl){
 
   }
   else{#the input test case is a matrix with multiple observations
-    distances_mat <- outer(1:n_test, 1:n_train, vdis) #each row i corresponds to distances of that test case i to all points in training test
+    distances_mat <- outer(1:n_test, 1:n_train, vdis)
+    #each row i corresponds to distances of that test case i to all points in training test
 
     class_result <- apply(distances_mat,1,find_nearest_1)
     return (class_result)

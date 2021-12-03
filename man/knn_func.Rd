@@ -74,7 +74,8 @@ knn_func <- function(train, test, cl, k, prob=FALSE){ #l=0 in the original knn f
   n_test <- nrow(test)
   n_train <- nrow(train)
 
-  distance <- function(a,b){ #a and b are indices of observations, a corresponds to the ath row of test dataset, b corresponds to the bth row of the train dataset
+  distance <- function(a,b){ #a and b are indices of observations,
+  #a corresponds to the ath row of test dataset, b corresponds to the bth row of the train dataset
     if(n_test==1){
       diff <- test-train[b,]
       euc_dis <- (sqrt(sum(diff^2)))
@@ -92,7 +93,7 @@ knn_func <- function(train, test, cl, k, prob=FALSE){ #l=0 in the original knn f
   find_k_nearest <- function(dists){
     sorted <- sort(dists, decreasing=FALSE)
     smallest_k_dists <- sorted[1:k]
-    ind_nearest_k <- which(dists %in% smallest_k_dists)
+    ind_nearest_k <- which(dists \%in\% smallest_k_dists)
     k_nearest <- cl[ind_nearest_k]
     tab <- table(k_nearest) #make a table of frequencies for the k nearest observations in train
     freq_max <- max(tab) # find which is the largest frequency
@@ -117,7 +118,8 @@ knn_func <- function(train, test, cl, k, prob=FALSE){ #l=0 in the original knn f
     return (class_result)
   }
   else{#the input test case is a matrix with multiple observations
-    distances_mat <- outer(1:n_test, 1:n_train, vdis) #each row i corresponds to distances of that test case i to all points in training test
+    distances_mat <- outer(1:n_test, 1:n_train, vdis)
+    #each row i corresponds to distances of that test case i to all points in training test
 
 
     class_result <- apply(distances_mat,1,find_k_nearest,simplify = FALSE)

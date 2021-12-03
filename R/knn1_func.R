@@ -37,6 +37,7 @@ knn1_func <- function(train, test, cl){
     smallest_dist <- min(dists)
 
     ind_nearest_k <- which(dists %in% smallest_dist)
+
     if(length(ind_nearest_k)!=1){
       ind_nearest_k<- sample(ind_nearest_k,1)
     }
