@@ -36,30 +36,72 @@ First, we use the function to classify one test case.
 
 ```{r}
 test1 <- c(2,3.5)
-knn_func(train,test1, cl, 3, prob=TRUE) #k is ideally chosen to be an odd number
+my_knn_output <- knn_func(train,test1, cl, 3, prob=TRUE) #k is ideally chosen to be an odd number
+my_knn_output
 ```
+
 see the output from the original knn function.
 
 ```{r}
 library(class)
-knn(train=train, test=test1, cl=cl, k=3, prob=TRUE)
+real_knn_output <- knn(train=train, test=test1, cl=cl, k=3, prob=TRUE)
+real_knn_output
 ```
+```{r}
+all.equal(my_knn_output, real_knn_output)
+```
+```{r}
+my_knn_output1 <- knn_func(train,test1, cl, 3, prob=FALSE) #k is ideally chosen to be an odd number
+my_knn_output1
+```
+
+```{r}
+real_knn_output1 <- knn(train=train, test=test1, cl=cl, k=3, prob=FALSE)
+real_knn_output1
+```
+
+```{r}
+all.equal(my_knn_output1, real_knn_output1)
+```
+
+
 Next, we use the knn_func to classify multiple test cases. The test cases are inputed as a matrix. The knn_func function reads each row of the test matrix as one test case.
 
 ```{r}
 test <- matrix(c(2,9,3.5,7.5),ncol=2)
 test
 ```
+
+
 ```{r}
-knn_func(train, test, cl, k=3, prob=TRUE)
-knn_func(train, test, cl, k=3, prob=FALSE)
+my_knn_output2 <- knn_func(train, test, cl, k=3, prob=TRUE)
+my_knn_output2
 ```
+
+
+```{r}
+my_knn_output3 <- knn_func(train, test, cl, k=3, prob=FALSE)
+my_knn_output3
+```
+
 see the output from the original knn function:
 
 ```{r}
-knn(train=train, test=test, k=3, cl=cl, prob=TRUE)
-knn(train, test, cl, k=3, prob=FALSE)
+real_knn_output2 <- knn(train=train, test=test, k=3, cl=cl, prob=TRUE)
+real_knn_output2
 ```
+
+
+```{r}
+real_knn_output3 <- knn(train, test, cl, k=3, prob=FALSE)
+real_knn_output3
+```
+
+```{r}
+all.equal(my_knn_output2, real_knn_output2)
+all.equal(my_knn_output3, real_knn_output3)
+```
+
 We can see that the results from knn_func match with the original knn function. 
 
 ##### Demonstrate the usage of knn1_func
@@ -69,23 +111,39 @@ The idea for knn1_func is very similar to knn_func, except that it only classify
 We first use this function to classify one test case
 
 ```{r}
-knn1_func(train, test1, cl)
+my_knn1_output <- knn1_func(train, test1, cl)
+my_knn1_output
 ```
+
 see if it matches with the original knn1 function:
 
 ```{r}
-knn1(train, test1, cl)
+real_knn1_output <- knn1(train, test1, cl)
+real_knn1_output
 ```
+```{r}
+all.equal(my_knn1_output, real_knn1_output)
+```
+
+
 Then we use this function to classify multiple test cases. The test cases are inputed as a matrix. The knn1_func function reads each row of the test matrix as one test case.
 
+
 ```{r}
-knn1_func(train, test, cl)
+my_knn1_output1 <- knn1_func(train, test, cl)
+my_knn1_output1
 ```
+
 see if the output matches with the original knn1 function:
 
 ```{r}
-knn1(train, test,cl)
+real_knn1_output1 <- knn1(train, test,cl)
+real_knn1_output1
 ```
+```{r}
+all.equal(my_knn1_output1, real_knn1_output1)
+```
+
 Further demonstration on knn1_func: randomness will be introduced if there are two data points are equally closest to the test case. 
 
 ```{r}
@@ -101,15 +159,19 @@ knn1_func(train_new, c(2,2),cl)
 set.seed(0)
 knn1_func(train_new, c(2,2),cl)
 ```
+
 There's also this kind of randomness introduced in the original knn1 function:
+
 ```{r}
 set.seed(0)
 knn1(train_new, c(2,2),cl)
 ```
+
 ```{r}
 set.seed(1)
 knn1(train_new,c(2,2),cl)
 ```
+
 Further notes: any of the input parameters cannot contain NA values. It will produce an error when applying knn_fun and knn1_func. The error messages match with those written in the original knn and knn1 function. 
 
 
@@ -121,6 +183,8 @@ Let's take a look at what the iris dataset looks like. The first four columns ar
 head(iris)
 dim(iris)
 ```
+The iris dataset has 5 columns and 150 rows. 
+
 ```{r}
 set.seed(1)
 training_rows <- sort(c(sample(1:50, 40), sample(51:100, 40), sample(101:150, 40)))
@@ -138,18 +202,37 @@ test_case_c <- as.matrix(iris[80, 1:4]) #true class versicolor
 #### Try knn_func on these test cases:
 
 ```{r}
-knn_func(train=training_x, test=as.matrix(rbind(test_case_a,test_case_b,test_case_c)),cl=labels, k=5, prob=TRUE)
+my_knn_iris_output <- knn_func(train=training_x, test=as.matrix(rbind(test_case_a,test_case_b,test_case_c)),cl=labels, k=5, prob=TRUE)
+my_knn_iris_output
+```
+
+```{r}
 #see if it matches with the output from the original knn function
-knn(train=training_x, test=as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl=labels, k=5, prob=TRUE)
+real_knn_iris_output <- knn(train=training_x, test=as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl=labels, k=5, prob=TRUE)
+real_knn_iris_output
+```
+```{r}
+all.equal(my_knn_iris_output, real_knn_iris_output)
 ```
 Yes, the output is exactly the same as the original knn function.
+
 
 #### Try knn1_func on these test cases:
 
 ```{r}
-knn1_func(train=training_x, test = as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl= labels)
-knn1(train=training_x, test = as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl= labels)
+my_knn1_iris_output <- knn1_func(train=training_x, test = as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl= labels)
+my_knn1_iris_output
 ```
+
+
+```{r}
+real_knn1_iris_output <- knn1(train=training_x, test = as.matrix(rbind(test_case_a,test_case_b,test_case_c)), cl= labels)
+real_knn1_iris_output
+```
+```{r}
+all.equal(my_knn1_iris_output, real_knn1_iris_output)
+```
+
 The output is exactly the same as the original knn1 function. 
 
 ### To compare the efficiency of knn_func, knn1_func with the original knn and knn1 functions:
@@ -174,4 +257,5 @@ library(tidyr)
 print(benchmark_result)
 plot(benchmark_result)
 ```
+
 Unfortunately, as demonstrated above, the knn_func and knn1_func are not as efficient as the original knn function and knn1 function in the class package.
