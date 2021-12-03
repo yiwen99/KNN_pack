@@ -36,7 +36,7 @@ More details on usage of the two functions can be found in the help pages in thi
 To get further assistance on the usage of this package:
 
 ```
-library(KNN625(
+library(KNN625)
 ?knn_func
 ?knn1_func
 browseVignettes("KNN625")
