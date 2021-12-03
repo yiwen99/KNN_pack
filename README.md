@@ -32,3 +32,12 @@ knn_func(train,test,cl,prob=TRUE,k=5) #output classification results b, c and co
 knn1_func(train,test,cl) #output classification results b, a
 ```
 More details on usage of the two functions can be found in the help pages in this repository.
+
+To get further assistance on the usage of this package:
+
+```
+library(KNN625(
+?knn_func
+?knn1_func
+browseVignettes("KNN625")
+```
