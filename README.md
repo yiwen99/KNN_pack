@@ -16,7 +16,7 @@ install.packages("devtools")
 Then run:
 ```
 library(devtools)
-devtools::install_github("yiwen99/KNN625")
+devtools::install_github("yiwen99/KNN625", build_vignettes=TRUE)
 library(KNN625)
 ```
 And the functions knn_func() and knn1_func() are ready to be called!
