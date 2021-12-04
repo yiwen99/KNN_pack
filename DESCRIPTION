@@ -13,10 +13,7 @@ Imports:
     ggplot2,
     tidyr,
     class,
-    knitr,
-    rmarkdown,
-    ggbeeswarm,
-    testthat (>= 3.0.0)
+    ggbeeswarm
 Suggests: 
     bench,
     ggplot2,
