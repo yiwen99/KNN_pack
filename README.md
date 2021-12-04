@@ -25,7 +25,8 @@ library(KNN625)
 ```
 And the functions knn_func() and knn1_func() are ready to be called!
 
-If you want to build the vignettes while installing the package, do:
+If you want to build the vignettes while installing the package, to ensure successful installation, please do:
+(althought the required packages are already included in the Imports section in Description)
 
 ```
 install.packages("bench")
