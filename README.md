@@ -20,10 +20,19 @@ install.packages("devtools")
 Then run:
 ```
 library(devtools)
-devtools::install_github("yiwen99/KNN625", build_vignettes=TRUE)
+devtools::install_github("yiwen99/KNN625")
 library(KNN625)
 ```
 And the functions knn_func() and knn1_func() are ready to be called!
+
+If you want to build the vignettes while installing the package, do:
+
+```
+install.packages("bench")
+devtools::install_github("yiwen99/KNN625", build_vignettes=TRUE)
+library(KNN625)
+browseVignettes("KNN625")
+```
 
 ## Usage
 Example usage:
