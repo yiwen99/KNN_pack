@@ -15,13 +15,8 @@ Imports:
     class,
     ggbeeswarm
 Suggests: 
-    bench,
-    ggplot2,
-    tidyr,
-    class,
     knitr,
     rmarkdown,
-    ggbeeswarm,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
