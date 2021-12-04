@@ -35,6 +35,8 @@ library(KNN625)
 browseVignettes("KNN625")
 ```
 
+If there are messages such as "recommend to update packages xxx", please choose update all. (The installation process may differ for different laptops or different version of R.
+
 ## Usage
 Example usage:
 ```
